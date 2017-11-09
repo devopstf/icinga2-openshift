@@ -1,0 +1,88 @@
+---
+
+- name: Create folder Core
+  file:
+    path: "{{ docker_folder }}/{{ item }}"
+    state: directory
+  with_items:
+    - "core"
+    - "web"
+    - "bbdd"
+
+- name: Create folder Core
+  file:
+    path: "{{ docker_folder }}/core/icinga2"
+    owner: 997
+    group: 995
+    state: directory
+
+    
+- name: Create folder Core
+  file:
+    path: "{{ docker_folder }}/core/icinga2/{{ item }}"
+    owner: 997
+    group: 995
+    state: directory
+  with_items:
+    - "conf.d"
+    - "pki"
+    - "scripts"
+
+      
+- name: Copy email's templates Core
+  template:
+    src: "{{ item.jinja }}"
+    dest: "{{ docker_folder }}/core/icinga2/scripts/{{ item.sh }}"
+    owner: 997
+    group: 995
+    mode: 0755
+  with_items:
+    - "{{ templates_email }}"
+         
+- name: Copy templates of Core services 
+  template:
+    src: "{{ item.jinja }}"
+    dest: "{{ docker_folder }}/core/icinga2/conf.d/{{ item.conf }}"
+    owner: 997
+    group: 995
+  with_items:
+    - "{{ templates_services_srvICintranet }}"
+
+- name: Copy templates of Core services 
+  template:
+    src: "{{ item.jinja }}"
+    dest: "{{ docker_folder }}/core/icinga2/pki/{{ item.conf }}"
+    owner: 997
+    group: 995 
+  with_items:
+    - "{{ templates_pki_core }}"
+    
+- name: Create folder Web
+  file:
+    path: "{{ docker_folder }}/web/icingaweb2"
+    owner: root
+    group: root
+    state: directory    
+
+- name: Create folder Web
+  file:
+    path: "{{ docker_folder }}/web/icingaweb2/modules"
+    owner: root
+    group: root
+    state: directory
+
+- name: Create folder Web
+  file:
+    path: "{{ docker_folder }}/web/icingaweb2/modules/monitoring"
+    owner: root
+    group: root
+    state: directory
+    
+- name: Copy templates of Web
+  template:
+    src: "{{ item.jinja }}"
+    dest: "{{ docker_folder }}/web/icingaweb2/{{ item.conf }}"
+    owner: root
+    group: root
+  with_items:
+    - "{{ templates_frontend }}"        

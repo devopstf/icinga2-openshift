@@ -1,0 +1,9 @@
+apply Service "check-updates" {
+  import "generic-service"
+
+  check_command = "nrpe"
+  vars.nrpe_command = "check_yum_updates"
+  vars.nrpe_timeout = "60"
+  assign where "hosts-generic" in host.groups
+
+} 

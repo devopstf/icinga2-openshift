@@ -1,0 +1,31 @@
+---
+
+- hosts: deploy-slave
+  tasks:
+    - set_fact: "db_user_sufix='-{{ appEnvironment }}'"
+      when: "appEnvironment | trim != ''"
+  
+  roles:
+          
+    - role: deploy-openshift-template
+      template_name: "frontend-icinga2-service-template.yaml"
+      template_type: "service"
+      resource_name: "frontend-icinga2"
+
+    - role: deploy-openshift-template
+      template_name: "frontend-icinga2-is-template.yaml"
+      template_type: "is"
+      resource_name: "frontend-icinga2"
+            
+    - role: deploy-openshift-template
+      template_name: "frontend-icinga2-dc-template.yaml"
+      template_type: "dc"
+      resource_name: "frontend-icinga2"
+      
+    - role: deploy-openshift-template
+      template_name: "frontend-icinga2-route-template.yaml"
+      template_type: "route"
+      resource_name: "frontend-icinga2"
+
+  vars_files:
+    - ./vars/build-frontend-vars.yml

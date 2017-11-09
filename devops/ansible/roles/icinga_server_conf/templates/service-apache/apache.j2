@@ -1,0 +1,12 @@
+
+
+apply Service "http-service-APACHE" {
+  import "generic-service"
+
+  check_command = "nrpe"
+  vars.nrpe_command = "check_http"
+  vars.nrpe_arguments = [ "localhost", "8080" ]
+  assign where host.name == "localhost"
+}
+
+

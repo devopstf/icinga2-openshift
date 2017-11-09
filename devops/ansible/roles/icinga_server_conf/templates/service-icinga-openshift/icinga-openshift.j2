@@ -1,0 +1,8 @@
+apply Service "http-service-icinga-openshift" {
+  import "generic-service"
+
+  check_command = "nrpe"
+  vars.nrpe_command = "check_httpsu"
+  vars.nrpe_arguments = [ master", "80", "http://master/health" ]
+  assign where host.name == "master"
+}

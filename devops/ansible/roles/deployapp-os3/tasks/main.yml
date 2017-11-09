@@ -1,0 +1,28 @@
+- name: login to os3 
+  command: >
+    oc login --insecure-skip-tls-verify=true --token={{ openshift_token }} {{ openshift_url }}
+
+- name: go to project {{ openshift_project_name }}
+  command: >
+    oc project {{ openshift_project_name }}
+
+- name: check if the app is created
+  command: >
+    oc get service {{ openshift_app_name }}  -n {{ openshift_project_name }} 
+  register: getService
+  ignore_errors: yes
+  
+- name: create template app
+  command: >
+    oc new-app -f {{ openshift.templates_path }}/main-template.yaml -n {{ openshift_project_name }}
+  when: "'not found' in '{{getService.stderr}}'"
+  ignore_errors: yes
+  
+- name: import image
+  command: >
+    oc import-image {{ image_name }}:{{ versionid }} --from={{ image.completeName }} --confirm -n {{ openshift_project_name }}
+    
+- name: tag to latest
+  command: >
+    oc tag {{ image_name }}:{{ versionid }} {{ image_name }}:latest -n {{ openshift_project_name }}
+

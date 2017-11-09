@@ -1,0 +1,44 @@
+---
+docker_folder: "..."
+templates_services_srvICintranet:
+  - { jinja: 'service-nrpe/nrpe-disk.j2', conf: 'nrpe-disk.conf' }
+  - { jinja: 'service-nrpe/nrpe-load.j2', conf: 'nrpe-load.conf' }
+  - { jinja: 'service-nrpe/nrpe-zombie.j2', conf: 'nrpe-zombie.conf' }
+  - { jinja: 'service-hudson/hudson.j2', conf: 'hudson.conf' }
+  - { jinja: 'service-polipo/polipo.j2', conf: 'polipo.conf' }
+  - { jinja: 'service-apache/apache.j2', conf: 'apache.conf' }
+  - { jinja: 'service-icinga-openshift/icinga-openshift.j2', conf: 'apache.conf' }      
+  - { jinja: 'groups/groups.j2', conf: 'groups.conf' }
+  - { jinja: 'generic-core/conf.d/hosts.j2', conf: 'hosts.conf' }
+  - { jinja: 'generic-core/conf.d/services.j2', conf: 'services.conf' }  
+  - { jinja: 'generic-core/conf.d/additional_services.j2', conf: 'additional_services.conf' }
+  - { jinja: 'generic-core/conf.d/api-users.j2', conf: 'api-users.conf' }
+  - { jinja: 'generic-core/conf.d/commands.j2', conf: 'commands.conf' } 
+  - { jinja: 'generic-core/conf.d/app.j2', conf: 'app.conf' }
+  - { jinja: 'generic-core/conf.d/downtimes.j2', conf: 'downtimes.conf' }     
+  - { jinja: 'generic-core/conf.d/notifications.j2', conf: 'notifications.conf' } 
+  - { jinja: 'generic-core/conf.d/satellite.j2', conf: 'satellite.conf' }
+  - { jinja: 'generic-core/conf.d/templates.j2', conf: 'templates.conf' } 
+  - { jinja: 'generic-core/conf.d/timeperiods.j2', conf: 'timperiods.conf' } 
+  - { jinja: 'generic-core/conf.d/users.j2', conf: 'users.conf' }
+  
+templates_pki_core:
+  - { jinja: 'generic-core/pki/ca.j2', conf: 'ca.crt' }
+  - { jinja: 'generic-core/pki/docker-icinga2.j2', conf: 'docker-icinga2.crt' }
+  - { jinja: 'generic-core/pki/docker-icinga2csr.j2', conf: 'docker-icinga2.csr' }
+  - { jinja: 'generic-core/pki/docker-icinga2key.j2', conf: 'docker-icinga2.key' }   
+    
+templates_frontend:
+  - { jinja: 'web-conf/authentication.j2', conf: 'authentication.ini' }
+  - { jinja: 'web-conf/config.j2', conf: 'config.ini' }
+  - { jinja: 'web-conf/groups.j2', conf: 'groups.ini' }
+  - { jinja: 'web-conf/resources.j2', conf: 'resources.ini' }
+  - { jinja: 'web-conf/roles.j2', conf: 'roles.ini' }
+  - { jinja: 'web-conf/setup.j2', conf: 'setup.token' }
+  - { jinja: 'web-conf/modules/monitoring/backends.j2', conf: 'modules/monitoring/backends.ini' }
+  - { jinja: 'web-conf/modules/monitoring/commandtransports.j2', conf: 'modules/monitoring/commandtransports.ini' }
+  - { jinja: 'web-conf/modules/monitoring/config.j2', conf: 'modules/monitoring/config.ini' }      
+           
+templates_email:
+  - { jinja: 'email-scripts/mail-host-notification.j2', sh: 'mail-host-notification.sh' }
+  - { jinja: 'email-scripts/mail-service-notification.j2', sh: 'mail-service-notification.sh' }

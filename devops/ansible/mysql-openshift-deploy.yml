@@ -1,0 +1,30 @@
+---
+
+- hosts: deploy-slave
+  tasks:
+    - set_fact: "db_user_sufix='-{{ appEnvironment }}'"
+      when: "appEnvironment | trim != ''"
+  
+  roles:
+  
+    - role: deploy-openshift-template
+      template_name: "mysql-service-template.yaml"
+      template_type: "service"
+      resource_name: "mysql"
+
+    - role: deploy-openshift-template
+      template_name: "mysql-is-template.yaml"
+      template_type: "is"
+      resource_name: "mysql"
+      
+      
+    - role: deploy-openshift-template
+      template_name: "mysql-dc-template.yaml"
+      template_type: "dc"
+      resource_name: "mysql"
+      
+
+
+  vars_files:
+    - ./vars/build-mysql-vars.yml
+  

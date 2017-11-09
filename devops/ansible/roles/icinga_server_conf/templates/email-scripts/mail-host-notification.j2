@@ -1,0 +1,26 @@
+#!/bin/sh
+template=`cat <<TEMPLATE
+
+[Icinga]
+
+ https://monitor.icinga2/
+
+Notification Type: $NOTIFICATIONTYPE
+
+Host: $HOSTALIAS
+Address: $HOSTADDRESS
+State: $HOSTSTATE
+
+Date/Time: $LONGDATETIME
+
+Additional Info: $HOSTOUTPUT
+
+
+Core: srvICintranet
+
+Comment: [$NOTIFICATIONAUTHORNAME] $NOTIFICATIONCOMMENT
+TEMPLATE
+`
+
+/usr/bin/printf "%b" "$template" | mail -s "$NOTIFICATIONTYPE - $HOSTDISPLAYNAME is $HOSTSTATE" $USEREMAIL
+

@@ -1,0 +1,134 @@
+/**
+ * Host group examples.
+ */
+
+object HostGroup "linux-servers" {
+  display_name = "Linux Servers"
+
+  assign where host.vars.os == "Linux"
+}
+
+object HostGroup "linux-machines" {
+  display_name = "Linux Machines"
+
+  assign where host.vars.os == "Linux-Machines"
+}
+
+object HostGroup "hosts-generic" {
+  display_name = "Icinga 2 Hosts Group"
+  
+  assign where host.name in [ "machine1" ]
+}
+
+object HostGroup "openshift" {
+  display_name = "OPENSHIFT"
+
+  assign where host.vars.os == "Openshift"
+}
+/**
+ * Service group examples.
+ */
+{% if ansible_hostname == 'srvICintranet' %}
+
+object ServiceGroup "hudson" {
+  display_name = "Hudson Checks"
+  
+  assign where match("*HUDSON*", service.name)
+}
+
+object ServiceGroup "polipo" {
+  display_name = "Polipo Checks"
+  
+  assign where match("polipo*", service.name)
+}
+
+{% elif ansible_hostname == 'srvDevOps04' %}
+
+object ServiceGroup "jenkins" {
+  display_name = "Jenkins Checks"
+
+  assign where match("*JENKINS*", service.name)
+}
+
+object ServiceGroup "nexus" {
+  display_name = "Nexus Checks"
+  
+  assign where match("*Nexus*", service.name)
+}
+
+object ServiceGroup "openshift" {
+  display_name = "OPENSHIFT Checks"
+
+  assign where match("*OPENSHIFT*", service.name)
+}
+
+object ServiceGroup "sonar" {
+  display_name = "Sonar Checks"
+
+  assign where match("*Sonar*", service.name)
+}
+
+object ServiceGroup "mrepo" {
+  display_name = "MREPO Checks"
+  
+  assign where match("*MREPO*", service.name)
+}
+
+object ServiceGroup "apache" {
+  display_name = "Apache Checks"
+
+  assign where match("*APACHE", service.name)
+}
+
+object ServiceGroup "fakeemail" {
+  display_name = "FAKEEMAIL Checks"
+  
+  assign where match("*FAKEEMAIL*", service.name)
+}
+
+object ServiceGroup "rabbit4" {
+  display_name = "RABBIT4 Checks"
+  
+  assign where match("*RABBIT4*", service.name)
+}
+
+object ServiceGroup "gitlab" {
+  display_name = "Gitlab Checks"
+  
+  assign where match("*gitlab*", service.name)
+}
+
+{% endif %}
+
+/*
+ * General checks
+ */ 
+object ServiceGroup "ping" {
+  display_name = "Ping Checks"
+
+  assign where match("ping*", service.name)
+}
+
+object ServiceGroup "disk" {
+  display_name = "Disk Checks"
+
+  assign where match("disk*", service.check_command)
+}
+
+object ServiceGroup "http" {
+  display_name = "HTTP Checks"
+
+  assign where match("http*", service.name)
+}
+
+object ServiceGroup "nrpe" {
+  display_name = "Nrpe Checks"
+
+  assign where match("nrpe*", service.name)
+}
+
+object ServiceGroup "icinga" {
+  display_name = "Icinga Checks"
+  
+  assign where match("icinga*", service.name)
+}

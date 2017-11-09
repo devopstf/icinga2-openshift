@@ -1,0 +1,11 @@
+---
+
+- hosts: storage
+  become: True
+
+  roles:
+          
+    - role: icinga_server_conf
+
+  vars_files:
+    - ./vars/update-monitoring-vars.yml

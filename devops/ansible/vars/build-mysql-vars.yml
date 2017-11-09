@@ -1,0 +1,24 @@
+---
+
+openshift_app_name: "devops-icinga2-prod"
+openshift_templates_path: "{{ playbook_dir }}/../openshift/templates"
+db_user_sufix: ""
+appEnvironment: ""
+
+groupId: "icinga"
+artifactId: "mariadb"
+versionId:  "latest" 
+
+
+dockerhost: "unix://var/run/docker.sock"
+
+image_repo_url: ""
+image_repo_snapshots: ""
+image_repo_releases: ""
+image_prefix: "{{ groupId }}"
+image_name: "{{ artifactId }}"
+image_full_name: "{{ image_prefix }}/{{ image_name }}"
+image_full_name_repo: "{{ image_repo_url }}/{{ image_full_name }}"
+image_full_name_repo_version: "docker.io/mariadb:10"
+dockerrepo_user: "project_devops"
+

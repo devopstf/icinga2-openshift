@@ -1,0 +1,4 @@
+---
+redeploy_openshift_template: false
+openshift_extra_params: ""
+
